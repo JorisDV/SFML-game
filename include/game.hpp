@@ -2,24 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 #include "config.hpp"
+#include "renderer.hpp"
 
 class Game
 {
 public:
-    Game() : m_window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE)
+    Game() : m_window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
+             m_renderer(m_window)
     {
         m_window.setFramerateLimit(Config::FRAMERATE_LIMIT);
     }
 
     void start()
     {
-
-        sf::CircleShape triangle(64.0f);
-        triangle.setPointCount(3);
-        triangle.setOrigin(triangle.getGeometricCenter());
-        triangle.setPosition({Config::Window::WIDTH / 2.0f, Config::Window::HEIGHT / 2.0f});
-        triangle.setFillColor(sf::Color::Green);
-
         while (m_window.isOpen())
         {
             while (const std::optional event = m_window.pollEvent())
@@ -28,14 +23,12 @@ public:
                     m_window.close();
             }
 
-            triangle.rotate(sf::degrees(1));
-
-            m_window.clear();
-            m_window.draw(triangle);
-            m_window.display();
+            m_renderer.draw(m_knight);
         }
     }
 
 private:
     sf::RenderWindow m_window;
+    Renderer m_renderer;
+    Knight m_knight;
 };

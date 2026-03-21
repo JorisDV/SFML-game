@@ -1,3 +1,5 @@
+# Windows only
+
 CXX = g++
 CXXFLAGS = -Wall -Wextra -Wpedantic -g -std=c++17
 CPPFLAGS = -Iinclude -Iexternal/SFML-3.0.2/include
