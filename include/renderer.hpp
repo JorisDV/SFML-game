@@ -9,6 +9,15 @@ class Renderer
 public:
     explicit Renderer(sf::RenderWindow &window) : window(window) {}
 
+    void drawText(Sensors sensors) {
+        sf::Font font("assets/font.ttf");
+        sf::Text text(font);
+        sf::String string = "JumpHoldTime = " + std::to_string(sensors.jumpHoldTime);
+        text.setString(string);
+        text.setCharacterSize(24);
+        window.draw(text);
+    }
+
     void draw(Knight &knight)
     {
         window.clear(Config::Window::BACKGROUND_COLOR);
@@ -22,8 +31,9 @@ public:
         platform.setOutlineThickness(Config::Platform::OUTLINE_THICKNESS);
         window.draw(platform);
 
-        window.display();
+        // window.display();
     }
+
 
 private:
     void drawKnight(Knight &knight)

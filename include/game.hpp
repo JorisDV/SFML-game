@@ -2,7 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "config.hpp"
+#include "physics.hpp"
 #include "renderer.hpp"
+#include "sensors.hpp"
 
 class Game
 {
@@ -23,7 +25,12 @@ public:
                     window.close();
             }
 
+            float dt = clock.restart().asSeconds();
+            sensors.poll(dt);
             renderer.draw(knight);
+            renderer.drawText(sensors);
+
+            window.display();
         }
     }
 
@@ -31,4 +38,7 @@ private:
     sf::RenderWindow window;
     Renderer renderer;
     Knight knight;
+    Sensors sensors;
+    Physics physics;
+    sf::Clock clock;
 };
