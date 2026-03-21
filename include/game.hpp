@@ -7,28 +7,28 @@
 class Game
 {
 public:
-    Game() : m_window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
-             m_renderer(m_window)
+    Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
+             renderer(window)
     {
-        m_window.setFramerateLimit(Config::FRAMERATE_LIMIT);
+        window.setFramerateLimit(Config::FRAMERATE_LIMIT);
     }
 
     void start()
     {
-        while (m_window.isOpen())
+        while (window.isOpen())
         {
-            while (const std::optional event = m_window.pollEvent())
+            while (const std::optional event = window.pollEvent())
             {
                 if (event->is<sf::Event::Closed>())
-                    m_window.close();
+                    window.close();
             }
 
-            m_renderer.draw(m_knight);
+            renderer.draw(knight);
         }
     }
 
 private:
-    sf::RenderWindow m_window;
-    Renderer m_renderer;
-    Knight m_knight;
+    sf::RenderWindow window;
+    Renderer renderer;
+    Knight knight;
 };

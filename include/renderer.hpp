@@ -7,21 +7,21 @@
 class Renderer
 {
 public:
-    explicit Renderer(sf::RenderWindow &window) : m_window(window) {}
+    explicit Renderer(sf::RenderWindow &window) : window(window) {}
 
     void draw(Knight &knight)
     {
-        m_window.clear();
+        window.clear();
         drawKnight(knight);
-        m_window.display();
+        window.display();
     }
 
 private:
     void drawKnight(Knight &knight)
     {
         knight.setPosition(knight.position);
-        m_window.draw(knight.sprite);
+        window.draw(knight.sprite);
     }
 
-    sf::RenderWindow &m_window;
+    sf::RenderWindow &window;
 };
