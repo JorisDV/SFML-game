@@ -1,38 +1,41 @@
-#include <SFML/Graphics.hpp>
+#pragma once
 
-namespace
-{
-    constexpr uint16_t WINDOW_WIDTH = 1280;
-    constexpr uint16_t WINDOW_HEIGHT = 720;
-}
+#include <SFML/Graphics.hpp>
+#include "config.hpp"
 
 class Game
 {
 public:
+    Game() : m_window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE)
+    {
+        m_window.setFramerateLimit(Config::FRAMERATE_LIMIT);
+    }
+
     void start()
     {
-        sf::RenderWindow window{sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "Test"};
-        window.setFramerateLimit(60);
 
         sf::CircleShape triangle(64.0f);
         triangle.setPointCount(3);
         triangle.setOrigin(triangle.getGeometricCenter());
-        triangle.setPosition({WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f});
+        triangle.setPosition({Config::Window::WIDTH / 2.0f, Config::Window::HEIGHT / 2.0f});
         triangle.setFillColor(sf::Color::Green);
 
-        while (window.isOpen())
+        while (m_window.isOpen())
         {
-            while (const std::optional event = window.pollEvent())
+            while (const std::optional event = m_window.pollEvent())
             {
                 if (event->is<sf::Event::Closed>())
-                    window.close();
+                    m_window.close();
             }
 
             triangle.rotate(sf::degrees(1));
 
-            window.clear();
-            window.draw(triangle);
-            window.display();
+            m_window.clear();
+            m_window.draw(triangle);
+            m_window.display();
         }
     }
+
+private:
+    sf::RenderWindow m_window;
 };

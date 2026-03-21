@@ -22,9 +22,9 @@ $(OBJ_DIR):
 
 $(TARGET): $(OBJ) | $(OBJ_DIR)
 	$(CXX) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $(TARGET)
-	copy /Y "$(SFML_BIN)\sfml-system-3.dll" "$(OBJ_DIR)\"
-	copy /Y "$(SFML_BIN)\sfml-window-3.dll" "$(OBJ_DIR)\"
-	copy /Y "$(SFML_BIN)\sfml-graphics-3.dll" "$(OBJ_DIR)\"
+	@copy /Y "$(SFML_BIN)\sfml-system-3.dll" "$(OBJ_DIR)\"
+	@copy /Y "$(SFML_BIN)\sfml-window-3.dll" "$(OBJ_DIR)\"
+	@copy /Y "$(SFML_BIN)\sfml-graphics-3.dll" "$(OBJ_DIR)\"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -MMD -MP -c $< -o $@
