@@ -10,7 +10,7 @@ public:
     Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
              renderer(window)
     {
-        window.setFramerateLimit(Config::FRAMERATE_LIMIT);
+        window.setFramerateLimit(Config::Window::FRAMERATE_LIMIT);
     }
 
     void start()

@@ -11,8 +11,17 @@ public:
 
     void draw(Knight &knight)
     {
-        window.clear();
+        window.clear(Config::Window::BACKGROUND_COLOR);
         drawKnight(knight);
+
+        sf::RectangleShape platform(Config::Platform::SIZE);
+        platform.setOrigin({Config::Platform::SIZE.x / 2, 0});
+        platform.setPosition(knight.position);
+        platform.setFillColor(Config::Platform::FILL_COLOR);
+        platform.setOutlineColor(Config::Platform::OUTLINE_COLOR);
+        platform.setOutlineThickness(Config::Platform::OUTLINE_THICKNESS);
+        window.draw(platform);
+
         window.display();
     }
 
