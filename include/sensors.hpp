@@ -1,26 +1,29 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "config.hpp"
 
 class Sensors
 {
 public:
-    sf::Vector2f direction;
-    float intensity;
-
-    void poll(float dt)
+    void poll(float &dt)
     {
         bool jumpPressedNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
         jumpHeld = jumpPressed && jumpPressedNow;
         if (jumpHeld)
-            jumpHoldTime += dt;
+            if (chargeTime + dt > Config::Sensors::MAX_CHARGE_TIME)
+                chargeTime = Config::Sensors::MAX_CHARGE_TIME;
+            else
+                chargeTime += dt;
         else
-            jumpHoldTime = 0.0f;
+            chargeTime = 0.0f;
 
         jumpPressed = jumpPressedNow;
     }
 
+    float chargeTime = 0.0f;
+
+private:
     bool jumpPressed = false;
     bool jumpHeld = false;
-    float jumpHoldTime = 0.0f;
 };

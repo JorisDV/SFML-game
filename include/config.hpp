@@ -2,6 +2,18 @@
 
 namespace Config
 {
+    struct HUD
+    {
+        struct ProgressBar
+        {
+            static constexpr sf::Vector2f SIZE = {150.0f, 25.0f};
+            static constexpr sf::Vector2f POSITION = {10.0f, 10.0f};
+            static constexpr sf::Color FILL_COLOR = sf::Color::Green;
+            static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
+            static constexpr float OUTLINE_THICKNESS = 4.0f;
+        };
+    };
+
     struct Knight
     {
         static constexpr unsigned int SIZE = 64;
@@ -14,6 +26,11 @@ namespace Config
         static constexpr sf::Color FILL_COLOR = sf::Color::White;
         static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
         static constexpr float OUTLINE_THICKNESS = 4.0f;
+    };
+
+    struct Sensors
+    {
+        static constexpr float MAX_CHARGE_TIME = 1.5f;
     };
 
     struct Window

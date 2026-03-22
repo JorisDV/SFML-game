@@ -27,10 +27,7 @@ public:
 
             float dt = clock.restart().asSeconds();
             sensors.poll(dt);
-            renderer.draw(knight);
-            renderer.drawText(sensors);
-
-            window.display();
+            renderer.draw(knight, sensors);
         }
     }
 

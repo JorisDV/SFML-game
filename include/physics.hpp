@@ -7,5 +7,4 @@
 class Physics
 {
 public:
-    
 };
