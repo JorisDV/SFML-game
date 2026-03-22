@@ -6,24 +6,29 @@
 class Sensors
 {
 public:
-    void poll(float &dt)
+    void poll(float dt)
     {
-        bool jumpPressedNow = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
-        jumpHeld = jumpPressed && jumpPressedNow;
-        if (jumpHeld)
-            if (chargeTime + dt > Config::Sensors::MAX_CHARGE_TIME)
-                chargeTime = Config::Sensors::MAX_CHARGE_TIME;
+        chargeIsReleased = false;
+
+        bool jumpIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
+        if (jumpWasPressed && jumpIsPressed)
+            if (chargeTime + dt > Config::Physics::MAX_CHARGE_TIME)
+                chargeTime = Config::Physics::MAX_CHARGE_TIME;
             else
                 chargeTime += dt;
+
+        else if (jumpWasPressed && !jumpIsPressed)
+            chargeIsReleased = true;
+
         else
             chargeTime = 0.0f;
 
-        jumpPressed = jumpPressedNow;
+        jumpWasPressed = jumpIsPressed;
     }
 
     float chargeTime = 0.0f;
+    bool chargeIsReleased = false;
 
 private:
-    bool jumpPressed = false;
-    bool jumpHeld = false;
+    bool jumpWasPressed = false;
 };

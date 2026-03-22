@@ -6,7 +6,7 @@
 class Knight
 {
 public:
-    Knight() : texture("assets/knight.png"),
+    Knight() : texture(Config::Knight::TEXTURE),
                sprite(texture)
     {
         sf::Vector2u texture_size = texture.getSize();
@@ -17,13 +17,9 @@ public:
         sprite.setPosition(position);
     }
 
-    sf::Vector2f position{Config::Window::WIDTH / 2, Config::Window::HEIGHT * 0.9};
-    sf::Vector2f velocity{0.0f, 0.0f};
-
-    void setPosition(sf::Vector2f position)
-    {
-        sprite.setPosition(position);
-    }
+    sf::Vector2f position = Config::Knight::INITIAL_POSITION;
+    sf::Vector2f velocity = {0.0f, 0.0f};
+    bool isOnGround = true;
 
 private:
     sf::Texture texture;

@@ -3,30 +3,25 @@
 #include <SFML/Graphics.hpp>
 #include "config.hpp"
 #include "knight.hpp"
+#include "world.hpp"
 
 class Renderer
 {
 public:
     explicit Renderer(sf::RenderWindow &window) : window(window) {}
 
-    void draw(Knight &knight, Sensors &sensors)
+    void draw(Knight &knight, Platform &platform, Sensors &sensors)
     {
         window.clear(Config::Window::BACKGROUND_COLOR);
 
-        drawKnight(knight);
-        drawPlatform(knight);
+        window.draw(knight.sprite);
+        window.draw(platform.rect);
         drawHUD(sensors);
 
         window.display();
     }
 
 private:
-    void drawKnight(Knight &knight)
-    {
-        knight.setPosition(knight.position);
-        window.draw(knight.sprite);
-    }
-
     void drawHUD(Sensors &sensors)
     {
         /*
@@ -44,7 +39,7 @@ private:
         background.setOutlineColor(Config::HUD::ProgressBar::OUTLINE_COLOR);
         background.setOutlineThickness(Config::HUD::ProgressBar::OUTLINE_THICKNESS);
 
-        float bar_length = Config::HUD::ProgressBar::SIZE.x * (sensors.chargeTime / Config::Sensors::MAX_CHARGE_TIME);
+        float bar_length = Config::HUD::ProgressBar::SIZE.x * (sensors.chargeTime / Config::Physics::MAX_CHARGE_TIME);
 
         sf::RectangleShape fill({bar_length, Config::HUD::ProgressBar::SIZE.y});
         fill.setPosition(Config::HUD::ProgressBar::POSITION);
@@ -52,17 +47,6 @@ private:
 
         window.draw(background);
         window.draw(fill);
-    }
-
-    void drawPlatform(Knight &knight)
-    {
-        sf::RectangleShape platform(Config::Platform::SIZE);
-        platform.setOrigin({Config::Platform::SIZE.x / 2, 0});
-        platform.setPosition(knight.position);
-        platform.setFillColor(Config::Platform::FILL_COLOR);
-        platform.setOutlineColor(Config::Platform::OUTLINE_COLOR);
-        platform.setOutlineThickness(Config::Platform::OUTLINE_THICKNESS);
-        window.draw(platform);
     }
 
     sf::RenderWindow &window;

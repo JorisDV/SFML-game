@@ -5,6 +5,8 @@
 #include "physics.hpp"
 #include "renderer.hpp"
 #include "sensors.hpp"
+#include "knight.hpp"
+#include "world.hpp"
 
 class Game
 {
@@ -27,7 +29,8 @@ public:
 
             float dt = clock.restart().asSeconds();
             sensors.poll(dt);
-            renderer.draw(knight, sensors);
+            physics.calculateKnightPosition(knight, platform, sensors, dt);
+            renderer.draw(knight, platform, sensors);
         }
     }
 
@@ -35,6 +38,7 @@ private:
     sf::RenderWindow window;
     Renderer renderer;
     Knight knight;
+    Platform platform;
     Sensors sensors;
     Physics physics;
     sf::Clock clock;
