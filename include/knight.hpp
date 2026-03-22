@@ -20,6 +20,7 @@ public:
     sf::Vector2f position = Config::Knight::INITIAL_POSITION;
     sf::Vector2f velocity = {0.0f, 0.0f};
     bool isOnGround = true;
+    bool hasJustLanded = false;
 
 private:
     sf::Texture texture;

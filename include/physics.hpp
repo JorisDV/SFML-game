@@ -11,6 +11,8 @@ class Physics
 public:
     void calculateKnightPosition(Knight &knight, Platform &platform, Sensors &sensors, float dt)
     {
+        knight.hasJustLanded = false;
+
         if (sensors.chargeIsReleased && knight.isOnGround)
         {
             float charge = sensors.chargeTime / Config::Physics::MAX_CHARGE_TIME;
@@ -28,9 +30,10 @@ public:
             if (knight.sprite.getGlobalBounds().findIntersection(platform.rect.getGlobalBounds()))
             {
                 knight.velocity = {0.0f, 0.0f};
-                knight.position = Config::Knight::INITIAL_POSITION;
+                knight.position = platform.position;
                 knight.sprite.setPosition(knight.position);
                 knight.isOnGround = true;
+                knight.hasJustLanded = true;
             }
         }
     }

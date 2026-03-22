@@ -4,6 +4,7 @@
 #include "config.hpp"
 #include "knight.hpp"
 #include "world.hpp"
+#include "hud.hpp"
 
 class Renderer
 {
@@ -16,38 +17,29 @@ public:
 
         window.draw(knight.sprite);
         window.draw(platform.rect);
-        drawHUD(sensors);
+        drawHUD(knight, sensors);
 
         window.display();
     }
 
 private:
-    void drawHUD(Sensors &sensors)
+    void drawHUD(Knight &knight, Sensors &sensors)
     {
-        /*
-        sf::Font font("assets/font.ttf");
-        sf::Text text(font);
-        sf::String string = "JumpHoldTime = " + std::to_string(sensors.jumpHoldTime);
-        text.setString(string);
-        text.setCharacterSize(24);
-        window.draw(text);
-        */
+        if (knight.hasJustLanded)
+            hud.arrow.reset(knight);
 
-        sf::RectangleShape background(Config::HUD::ProgressBar::SIZE);
-        background.setPosition(Config::HUD::ProgressBar::POSITION);
-        background.setFillColor(sf::Color::Transparent);
-        background.setOutlineColor(Config::HUD::ProgressBar::OUTLINE_COLOR);
-        background.setOutlineThickness(Config::HUD::ProgressBar::OUTLINE_THICKNESS);
+        if (knight.isOnGround)
+        {
+            hud.arrow.update(sensors.angle);
+            window.draw(hud.arrow.line);
+            window.draw(hud.arrow.triangle);
+        }
 
-        float bar_length = Config::HUD::ProgressBar::SIZE.x * (sensors.chargeTime / Config::Physics::MAX_CHARGE_TIME);
-
-        sf::RectangleShape fill({bar_length, Config::HUD::ProgressBar::SIZE.y});
-        fill.setPosition(Config::HUD::ProgressBar::POSITION);
-        fill.setFillColor(Config::HUD::ProgressBar::FILL_COLOR);
-
-        window.draw(background);
-        window.draw(fill);
+        hud.progress_bar.update(sensors);
+        window.draw(hud.progress_bar.background);
+        window.draw(hud.progress_bar.fill);
     }
 
     sf::RenderWindow &window;
+    HUD hud;
 };

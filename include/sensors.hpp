@@ -8,6 +8,17 @@ class Sensors
 public:
     void poll(float dt)
     {
+        poll_charge(dt);
+        poll_angle();
+    }
+
+    float chargeTime = 0.0f;
+    bool chargeIsReleased = false;
+    sf::Angle angle = sf::degrees(1);
+
+private:
+    void poll_charge(float dt)
+    {
         chargeIsReleased = false;
 
         bool jumpIsPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space);
@@ -26,9 +37,16 @@ public:
         jumpWasPressed = jumpIsPressed;
     }
 
-    float chargeTime = 0.0f;
-    bool chargeIsReleased = false;
+    void poll_angle()
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+            if (angle - Config::Physics::ANGLE_STEP > -Config::Physics::MAX_ANGLE)
+                angle -= Config::Physics::ANGLE_STEP;
 
-private:
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+            if (angle + Config::Physics::ANGLE_STEP < Config::Physics::MAX_ANGLE)
+                angle += Config::Physics::ANGLE_STEP;
+    }
+
     bool jumpWasPressed = false;
 };

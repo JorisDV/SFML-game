@@ -12,6 +12,14 @@ namespace Config
             static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
             static constexpr float OUTLINE_THICKNESS = 4.0f;
         };
+
+        struct Arrow
+        {
+            static constexpr sf::Vector2f SIZE_LINE = {5.0f, 80.0f};
+            static constexpr float SIZE_TRIANGLE = 16.0f;
+            static constexpr sf::Color COLOR = sf::Color::White;
+            static constexpr float HEIGHT_ABOVE_KNIGHT = 10.0f;
+        };
     };
 
     struct Platform
@@ -28,6 +36,8 @@ namespace Config
         static constexpr float MIN_JUMP_SPEED = 300.0f;
         static constexpr float MAX_JUMP_SPEED = 900.0f;
         static constexpr float GRAVITY = 1600.0f;
+        static constexpr sf::Angle ANGLE_STEP = sf::degrees(1);
+        static constexpr sf::Angle MAX_ANGLE = sf::degrees(60);
     };
 
     struct Window

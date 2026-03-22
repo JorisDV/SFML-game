@@ -7,9 +7,9 @@ class Platform
 {
 public:
     Platform() : rect(Config::Platform::SIZE),
-                 position({Config::Knight::INITIAL_POSITION.x, Config::Knight::INITIAL_POSITION.y + Config::Platform::OUTLINE_THICKNESS})
+                 position({Config::Knight::INITIAL_POSITION.x, Config::Knight::INITIAL_POSITION.y})
     {
-        rect.setOrigin({Config::Platform::SIZE.x / 2, 0});
+        rect.setOrigin({Config::Platform::SIZE.x / 2, -Config::Platform::OUTLINE_THICKNESS});
         rect.setPosition(position);
         rect.setFillColor(Config::Platform::FILL_COLOR);
         rect.setOutlineColor(Config::Platform::OUTLINE_COLOR);
