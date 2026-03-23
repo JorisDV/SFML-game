@@ -9,15 +9,26 @@
 class Renderer
 {
 public:
-    explicit Renderer(sf::RenderWindow &window) : window(window) {}
+    explicit Renderer(sf::RenderWindow &window) : window(window),
+                                                  font(Config::HUD::FPSCounter::FONT),
+                                                  fps_text(font)
+    {
+        fps_text.setCharacterSize(Config::HUD::FPSCounter::SIZE);
+        fps_text.setString("FPS: 9999");
+        sf::FloatRect bounds = fps_text.getGlobalBounds();
+        fps_text.setOrigin({bounds.size.x, 0});
+        fps_text.setPosition(Config::HUD::FPSCounter::POSITION);
+        fps_text.setFillColor(Config::HUD::FPSCounter::FILL_COLOR);
+    }
 
-    void draw(Knight &knight, World &world, Sensors &sensors)
+    void draw(Knight &knight, World &world, Sensors &sensors, float fps)
     {
         window.clear(Config::Window::BACKGROUND_COLOR);
 
         window.draw(knight.sprite);
         drawWorld(world);
         drawHUD(knight, sensors);
+        drawFPS(fps);
 
         window.display();
     }
@@ -48,6 +59,14 @@ private:
         window.draw(hud.progress_bar.fill);
     }
 
+    void drawFPS(float fps)
+    {
+        fps_text.setString("FPS: " + std::to_string((int)fps));
+        window.draw(fps_text);
+    }
+
     sf::RenderWindow &window;
     HUD hud;
+    sf::Font font;
+    sf::Text fps_text;
 };

@@ -19,6 +19,10 @@ public:
 
     void start()
     {
+        int frame_count = 0;
+        float timer = 0.0f;
+        float fps = 0.0f;
+
         while (window.isOpen())
         {
             while (const std::optional event = window.pollEvent())
@@ -28,13 +32,31 @@ public:
             }
 
             float dt = clock.restart().asSeconds();
+
+            fps = calculateFPS(frame_count, timer, dt, fps);
+
             sensors.poll(dt);
             physics.calculateKnightPosition(knight, world, sensors, dt);
-            renderer.draw(knight, world, sensors);
+            renderer.draw(knight, world, sensors, fps);
         }
     }
 
 private:
+    float calculateFPS(int &frame_count, float &timer, float dt, float fps)
+    {
+        timer += dt;
+        frame_count++;
+
+        if (timer >= 0.25f)
+        {
+            fps = frame_count / timer;
+            frame_count = 0;
+            timer = 0.0f;
+        }
+
+        return fps;
+    }
+
     sf::RenderWindow window;
     Renderer renderer;
     Knight knight;

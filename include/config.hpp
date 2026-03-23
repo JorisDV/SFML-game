@@ -2,6 +2,22 @@
 
 namespace Config
 {
+    struct Window
+    {
+        static constexpr unsigned int WIDTH = 1280;
+        static constexpr unsigned int HEIGHT = 720;
+        static constexpr char TITLE[] = "SFML-game";
+        static constexpr unsigned int FRAMERATE_LIMIT = 60;
+        static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
+    };
+
+    struct Knight
+    {
+        static constexpr unsigned int SIZE = 64;
+        static constexpr char TEXTURE[] = "assets/knight.png";
+        static constexpr sf::Vector2f INITIAL_POSITION = {Config::Window::WIDTH / 2, Config::Window::HEIGHT * 0.9};
+    };
+
     struct HUD
     {
         struct ProgressBar
@@ -20,6 +36,14 @@ namespace Config
             static constexpr sf::Color COLOR = sf::Color::White;
             static constexpr float HEIGHT_ABOVE_KNIGHT = 10.0f;
         };
+
+        struct FPSCounter
+        {
+            static constexpr int SIZE = 24;
+            static constexpr sf::Vector2f POSITION = {Config::Window::WIDTH - 10.0f, 10.0f};
+            static constexpr sf::Color FILL_COLOR = sf::Color::White;
+            static constexpr char FONT[] = "assets/font.ttf";
+        };
     };
 
     struct Platform
@@ -36,23 +60,7 @@ namespace Config
         static constexpr float MIN_JUMP_SPEED = 300.0f;
         static constexpr float MAX_JUMP_SPEED = 1200.0f;
         static constexpr float GRAVITY = 1600.0f;
-        static constexpr sf::Angle ANGLE_STEP = sf::degrees(1.5);
+        static constexpr sf::Angle ANGLE_STEP = sf::degrees(1);
         static constexpr sf::Angle MAX_ANGLE = sf::degrees(60);
-    };
-
-    struct Window
-    {
-        static constexpr unsigned int WIDTH = 1280;
-        static constexpr unsigned int HEIGHT = 720;
-        static constexpr char TITLE[] = "SFML-game";
-        static constexpr unsigned int FRAMERATE_LIMIT = 60;
-        static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
-    };
-
-    struct Knight
-    {
-        static constexpr unsigned int SIZE = 64;
-        static constexpr char TEXTURE[] = "assets/knight.png";
-        static constexpr sf::Vector2f INITIAL_POSITION = {Config::Window::WIDTH / 2, Config::Window::HEIGHT * 0.9};
     };
 }
