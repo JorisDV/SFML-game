@@ -53,12 +53,11 @@ public:
         triangle.setRotation(angle);
     }
 
-    void reset(Knight &knight)
+    void reset(Knight &knight, Sensors &sensors)
     {
         line.setPosition({knight.position.x, knight.position.y - Config::Knight::SIZE - Config::HUD::Arrow::HEIGHT_ABOVE_KNIGHT});
-        line.setRotation(sf::degrees(0));
         triangle.setPosition(line.getPosition());
-        triangle.setRotation(sf::degrees(0));
+        sensors.angle = sf::degrees(0);
     }
 
     sf::RectangleShape line;

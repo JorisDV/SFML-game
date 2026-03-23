@@ -1,7 +1,7 @@
 # Windows only
 
 CXX = g++
-CXXFLAGS = -Wall -Wextra -Wpedantic -g -std=c++17
+CXXFLAGS = -Wall -Wextra -Wpedantic -g -std=c++20
 CPPFLAGS = -Iinclude -Iexternal/SFML-3.0.2/include
 LDFLAGS = -Lexternal/SFML-3.0.2/lib
 LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system

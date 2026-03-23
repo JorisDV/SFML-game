@@ -34,9 +34,9 @@ namespace Config
     {
         static constexpr float MAX_CHARGE_TIME = 1.5f;
         static constexpr float MIN_JUMP_SPEED = 300.0f;
-        static constexpr float MAX_JUMP_SPEED = 900.0f;
+        static constexpr float MAX_JUMP_SPEED = 1200.0f;
         static constexpr float GRAVITY = 1600.0f;
-        static constexpr sf::Angle ANGLE_STEP = sf::degrees(1);
+        static constexpr sf::Angle ANGLE_STEP = sf::degrees(1.5);
         static constexpr sf::Angle MAX_ANGLE = sf::degrees(60);
     };
 

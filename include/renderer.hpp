@@ -11,22 +11,30 @@ class Renderer
 public:
     explicit Renderer(sf::RenderWindow &window) : window(window) {}
 
-    void draw(Knight &knight, Platform &platform, Sensors &sensors)
+    void draw(Knight &knight, World &world, Sensors &sensors)
     {
         window.clear(Config::Window::BACKGROUND_COLOR);
 
         window.draw(knight.sprite);
-        window.draw(platform.rect);
+        drawWorld(world);
         drawHUD(knight, sensors);
 
         window.display();
     }
 
 private:
+    void drawWorld(World &world)
+    {
+        for (Platform platform : world.platforms)
+        {
+            window.draw(platform.rect);
+        }
+    }
+
     void drawHUD(Knight &knight, Sensors &sensors)
     {
         if (knight.hasJustLanded)
-            hud.arrow.reset(knight);
+            hud.arrow.reset(knight, sensors);
 
         if (knight.isOnGround)
         {

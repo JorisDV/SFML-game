@@ -29,8 +29,8 @@ public:
 
             float dt = clock.restart().asSeconds();
             sensors.poll(dt);
-            physics.calculateKnightPosition(knight, platform, sensors, dt);
-            renderer.draw(knight, platform, sensors);
+            physics.calculateKnightPosition(knight, world, sensors, dt);
+            renderer.draw(knight, world, sensors);
         }
     }
 
@@ -38,7 +38,7 @@ private:
     sf::RenderWindow window;
     Renderer renderer;
     Knight knight;
-    Platform platform;
+    World world;
     Sensors sensors;
     Physics physics;
     sf::Clock clock;
