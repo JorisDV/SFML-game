@@ -24,7 +24,7 @@ namespace Config
 
     struct Platform
     {
-        static constexpr sf::Vector2f SIZE = {120.0f, 18.0f};
+        static constexpr sf::Vector2f SIZE = {320.0f, 18.0f};
         static constexpr sf::Color FILL_COLOR = sf::Color::White;
         static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
         static constexpr float OUTLINE_THICKNESS = 4.0f;

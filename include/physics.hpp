@@ -14,6 +14,7 @@ public:
     void calculateKnightPosition(Knight &knight, World &world, Sensors &sensors, float dt)
     {
         knight.hasJustLanded = false;
+        knight.prev_position_y = knight.position.y;
 
         if (sensors.chargeIsReleased && knight.isOnGround)
         {
@@ -28,17 +29,30 @@ public:
         {
             knight.velocity.y += Config::Physics::GRAVITY * dt;
             knight.position += knight.velocity * dt;
-            knight.sprite.setPosition(knight.position);
 
             for (Platform platform : world.platforms)
-                if (knight.sprite.getGlobalBounds().findIntersection(platform.rect.getGlobalBounds()))
+                if (knightHasLanded(knight, platform))
                 {
                     knight.velocity = {0.0f, 0.0f};
-                    knight.position = platform.position;
-                    knight.sprite.setPosition(knight.position);
+                    knight.position.y = platform.position.y;
                     knight.isOnGround = true;
                     knight.hasJustLanded = true;
                 }
+
+            knight.sprite.setPosition(knight.position);
         }
+    }
+
+private:
+    bool knightHasLanded(Knight &knight, Platform &platform)
+    {
+        bool isFalling = knight.velocity.y > 0;
+        bool crossedPlatfomY = knight.prev_position_y < platform.position.y && platform.position.y <= knight.position.y;
+        bool withinPlatformX = platform.position.x - (Config::Platform::SIZE.x / 2) - Config::Platform::OUTLINE_THICKNESS < knight.position.x - (1 / 3) * Config::Knight::SIZE && knight.position.x + (1 / 3) * Config::Knight::SIZE < platform.position.x + (Config::Platform::SIZE.x / 2) + Config::Platform::OUTLINE_THICKNESS;
+
+        if (isFalling && crossedPlatfomY && withinPlatformX)
+            return true;
+
+        return false;
     }
 };
