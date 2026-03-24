@@ -15,19 +15,18 @@ public:
     {
         fps_text.setCharacterSize(Config::HUD::FPSCounter::SIZE);
         fps_text.setString("FPS: 9999");
-        sf::FloatRect bounds = fps_text.getGlobalBounds();
-        fps_text.setOrigin({bounds.size.x, 0});
+        fps_text.setOrigin({fps_text.getGlobalBounds().size.x, 0});
         fps_text.setPosition(Config::HUD::FPSCounter::POSITION);
         fps_text.setFillColor(Config::HUD::FPSCounter::FILL_COLOR);
     }
 
-    void draw(Knight &knight, World &world, Sensors &sensors, float fps)
+    void draw(Knight &knight, World &world, Sensors &sensors, HUD &hud, float fps)
     {
         window.clear(Config::Window::BACKGROUND_COLOR);
 
         window.draw(knight.sprite);
         drawWorld(world);
-        drawHUD(knight, sensors);
+        drawHUD(hud, knight, sensors);
         drawFPS(fps);
 
         window.display();
@@ -42,7 +41,7 @@ private:
         }
     }
 
-    void drawHUD(Knight &knight, Sensors &sensors)
+    void drawHUD(HUD &hud, Knight &knight, Sensors &sensors)
     {
         if (knight.hasJustLanded)
             hud.arrow.reset(knight, sensors);
@@ -66,7 +65,6 @@ private:
     }
 
     sf::RenderWindow &window;
-    HUD hud;
     sf::Font font;
     sf::Text fps_text;
 };

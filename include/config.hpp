@@ -7,6 +7,7 @@ namespace Config
         static constexpr unsigned int WIDTH = 1280;
         static constexpr unsigned int HEIGHT = 720;
         static constexpr char TITLE[] = "SFML-game";
+        static constexpr char ICON[] = "assets/knight.png";
         static constexpr unsigned int FRAMERATE_LIMIT = 60;
         static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
     };

@@ -7,6 +7,7 @@
 #include "sensors.hpp"
 #include "knight.hpp"
 #include "world.hpp"
+#include "hud.hpp"
 
 class Game
 {
@@ -14,6 +15,8 @@ public:
     Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
              renderer(window)
     {
+        sf::Image icon(Config::Window::ICON);
+        window.setIcon(icon.getSize(), icon.getPixelsPtr());
         window.setFramerateLimit(Config::Window::FRAMERATE_LIMIT);
     }
 
@@ -37,8 +40,18 @@ public:
 
             sensors.poll(dt);
             physics.calculateKnightPosition(knight, world, sensors, dt);
-            renderer.draw(knight, world, sensors, fps);
+            checkGameOver(window, knight);
+            renderer.draw(knight, world, sensors, hud, fps);
         }
+    }
+
+    void restart()
+    {
+        knight.position = Config::Knight::INITIAL_POSITION;
+        knight.sprite.setPosition(knight.position);
+        knight.velocity = {0.0f, 0.0f};
+        knight.isOnGround = true;
+        hud.arrow.reset(knight, sensors);
     }
 
 private:
@@ -57,11 +70,23 @@ private:
         return fps;
     }
 
+    void checkGameOver(sf::RenderWindow &window, Knight &knight)
+    {
+        sf::View view = window.getView();
+        sf::Vector2f center = view.getCenter();
+        sf::Vector2f size = view.getSize();
+        float yLevelUndersideView = center.y + (size.y / 2);
+
+        if (knight.position.y - Config::Knight::SIZE > yLevelUndersideView)
+            restart();
+    }
+
     sf::RenderWindow window;
     Renderer renderer;
     Knight knight;
     World world;
     Sensors sensors;
     Physics physics;
+    HUD hud;
     sf::Clock clock;
 };

@@ -26,7 +26,7 @@ class World
 public:
     World() : platforms({Platform({Config::Knight::INITIAL_POSITION.x, Config::Knight::INITIAL_POSITION.y}),
                          Platform({200, 500}),
-                         Platform({1000, 300})}) {}
+                         Platform({600, 300})}) {}
 
     std::vector<Platform> platforms;
 };
