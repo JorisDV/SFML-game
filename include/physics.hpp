@@ -15,6 +15,7 @@ public:
     {
         knight.hasJustLanded = false;
         knight.prev_position_y = knight.position.y;
+        knight.hasJustJumped = false;
 
         if (sensors.chargeIsReleased && knight.isOnGround)
         {
@@ -23,6 +24,7 @@ public:
             float jumpSpeed = Config::Physics::MIN_JUMP_SPEED + charge * (Config::Physics::MAX_JUMP_SPEED - Config::Physics::MIN_JUMP_SPEED);
             knight.velocity = {jumpSpeed * std::cos(angle), -jumpSpeed * std::sin(angle)};
             knight.isOnGround = false;
+            knight.hasJustJumped = true;
         }
 
         if (!knight.isOnGround)
@@ -38,8 +40,6 @@ public:
                     knight.isOnGround = true;
                     knight.hasJustLanded = true;
                 }
-
-            knight.sprite.setPosition(knight.position);
         }
     }
 

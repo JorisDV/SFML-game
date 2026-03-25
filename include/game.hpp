@@ -15,8 +15,8 @@ public:
     Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
              renderer(window)
     {
-        sf::Image icon(Config::Window::ICON);
-        window.setIcon(icon.getSize(), icon.getPixelsPtr());
+        // sf::Image icon(Config::Window::ICON);
+        // window.setIcon(icon.getSize(), icon.getPixelsPtr());
         window.setFramerateLimit(Config::Window::FRAMERATE_LIMIT);
     }
 
@@ -48,6 +48,11 @@ public:
     void restart()
     {
         knight.position = Config::Knight::INITIAL_POSITION;
+        knight.sprite = sf::Sprite(knight.textureOnGround);
+        knight.sprite.setScale({static_cast<float>(Config::Knight::SIZE) / 16,
+                                static_cast<float>(Config::Knight::SIZE) / 16});
+        knight.sprite.setOrigin({8.0f, 16.0f});
+        knight.sprite.setPosition(knight.position);
         knight.sprite.setPosition(knight.position);
         knight.velocity = {0.0f, 0.0f};
         knight.isOnGround = true;

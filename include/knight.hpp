@@ -6,14 +6,13 @@
 class Knight
 {
 public:
-    Knight() : texture(Config::Knight::TEXTURE),
-               sprite(texture)
+    Knight() : textureOnGround(Config::Knight::SPRITESHEET, false, sf::IntRect({0, 0}, {16, 16})),
+               textureJumping(Config::Knight::SPRITESHEET, false, sf::IntRect({16, 0}, {16, 16})),
+               sprite(textureOnGround)
     {
-        sf::Vector2u texture_size = texture.getSize();
-        sprite.setScale({static_cast<float>(Config::Knight::SIZE) / texture_size.x,
-                         static_cast<float>(Config::Knight::SIZE) / texture_size.y});
-        sprite.setOrigin({static_cast<float>(texture_size.x) / 2.0f,
-                          static_cast<float>(texture_size.y)});
+        sprite.setScale({static_cast<float>(Config::Knight::SIZE) / 16,
+                         static_cast<float>(Config::Knight::SIZE) / 16});
+        sprite.setOrigin({8.0f, 16.0f});
         sprite.setPosition(position);
     }
 
@@ -22,10 +21,9 @@ public:
     float prev_position_y = Config::Knight::INITIAL_POSITION.y;
     bool isOnGround = true;
     bool hasJustLanded = false;
+    bool hasJustJumped = false;
 
-private:
-    sf::Texture texture;
-
-public:
+    sf::Texture textureOnGround;
+    sf::Texture textureJumping;
     sf::Sprite sprite;
 };

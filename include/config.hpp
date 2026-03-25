@@ -7,7 +7,7 @@ namespace Config
         static constexpr unsigned int WIDTH = 1280;
         static constexpr unsigned int HEIGHT = 720;
         static constexpr char TITLE[] = "SFML-game";
-        static constexpr char ICON[] = "assets/knight.png";
+        // static constexpr char ICON[] = "assets/knight.png";
         static constexpr unsigned int FRAMERATE_LIMIT = 60;
         static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
     };
@@ -15,7 +15,7 @@ namespace Config
     struct Knight
     {
         static constexpr unsigned int SIZE = 64;
-        static constexpr char TEXTURE[] = "assets/knight.png";
+        static constexpr char SPRITESHEET[] = "assets/knight.png";
         static constexpr sf::Vector2f INITIAL_POSITION = {Config::Window::WIDTH / 2, Config::Window::HEIGHT * 0.9};
     };
 

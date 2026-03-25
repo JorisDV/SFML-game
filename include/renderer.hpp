@@ -24,7 +24,7 @@ public:
     {
         window.clear(Config::Window::BACKGROUND_COLOR);
 
-        window.draw(knight.sprite);
+        drawKnight(knight);
         drawWorld(world);
         drawHUD(hud, knight, sensors);
         drawFPS(fps);
@@ -33,6 +33,30 @@ public:
     }
 
 private:
+    void drawKnight(Knight &knight)
+    {
+        if (knight.hasJustLanded)
+        {
+            knight.sprite = sf::Sprite(knight.textureOnGround);
+            knight.sprite.setScale({static_cast<float>(Config::Knight::SIZE) / 16,
+                                    static_cast<float>(Config::Knight::SIZE) / 16});
+            knight.sprite.setOrigin({8.0f, 16.0f});
+            knight.sprite.setPosition(knight.position);
+        }
+
+        if (knight.hasJustJumped)
+        {
+            knight.sprite = sf::Sprite(knight.textureJumping);
+            knight.sprite.setScale({static_cast<float>(Config::Knight::SIZE) / 16,
+                                    static_cast<float>(Config::Knight::SIZE) / 16});
+            knight.sprite.setOrigin({8.0f, 16.0f});
+            knight.sprite.setPosition(knight.position);
+        }
+
+        knight.sprite.setPosition(knight.position);
+        window.draw(knight.sprite);
+    }
+
     void drawWorld(World &world)
     {
         for (Platform platform : world.platforms)
