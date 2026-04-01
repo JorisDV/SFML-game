@@ -3,15 +3,22 @@ project(SFML-game LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Download SFML
-include(FetchContent)
-FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 3.0.2
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
-FetchContent_MakeAvailable(SFML)
+set(SFML_VERSION 3.0.2)
+find_package(SFML ${SFML_VERSION} QUIET COMPONENTS Graphics)
+
+if(NOT SFML_FOUND)
+    message(STATUS "SFML not found locally. Downloading... (this may take a while)")
+
+    include(FetchContent)
+    FetchContent_Declare(SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG ${SFML_VERSION}
+        GIT_SHALLOW ON
+        EXCLUDE_FROM_ALL
+        SYSTEM
+    )
+    FetchContent_MakeAvailable(SFML)
+endif()
 
 add_executable(main
     src/main.cpp
