@@ -24,12 +24,12 @@ float calculateFPS(int &frame_count, float &timer, float dt, float fps)
 }
 
 Game::Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
-             renderer(window)
-    {
-        sf::Image icon(Config::Window::ICON);
-        window.setIcon(icon.getSize(), icon.getPixelsPtr());
-        window.setFramerateLimit(Config::Window::FRAMERATE_LIMIT);
-    }
+               renderer(window)
+{
+    sf::Image icon(Config::Window::ICON);
+    window.setIcon(icon.getSize(), icon.getPixelsPtr());
+    window.setFramerateLimit(Config::Window::FRAMERATE_LIMIT);
+}
 
 void Game::start()
 {
