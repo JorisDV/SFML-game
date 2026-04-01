@@ -1,5 +1,8 @@
 #include <SFML/Graphics.hpp>
-#include "../include/hud.hpp"
+#include "hud.hpp"
+#include "config.hpp"
+#include "knight.hpp"
+#include "sensors.hpp"
 
 ProgressBar::ProgressBar() : background(Config::HUD::ProgressBar::SIZE)
 {

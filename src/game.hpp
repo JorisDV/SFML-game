@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "config.hpp"
 #include "physics.hpp"
 #include "renderer.hpp"
 #include "sensors.hpp"

@@ -1,5 +1,12 @@
 #include <SFML/Graphics.hpp>
-#include "../include/game.hpp"
+#include "game.hpp"
+#include "config.hpp"
+#include "physics.hpp"
+#include "renderer.hpp"
+#include "sensors.hpp"
+#include "knight.hpp"
+#include "world.hpp"
+#include "hud.hpp"
 
 float calculateFPS(int &frame_count, float &timer, float dt, float fps)
 {

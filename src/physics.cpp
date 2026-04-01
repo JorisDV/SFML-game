@@ -1,8 +1,11 @@
 #include <cmath>
 #include <numbers>
 #include <SFML/Graphics.hpp>
-#include "../include/physics.hpp"
-#include "../include/config.hpp"
+#include "physics.hpp"
+#include "knight.hpp"
+#include "world.hpp"
+#include "sensors.hpp"
+#include "config.hpp"
 
 void Physics::calculateKnightPosition(Knight &knight, World &world, Sensors &sensors, float dt)
 {
