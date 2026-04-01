@@ -1,13 +1,18 @@
 #pragma once
 
+#include <filesystem>
+#include <SFML/Graphics.hpp>
+
 namespace Config
 {
+    const std::filesystem::path ASSETS_DIRECTORY = "../assets";
+
     struct Window
     {
         static constexpr unsigned int WIDTH = 1280;
         static constexpr unsigned int HEIGHT = 720;
         static constexpr char TITLE[] = "SFML-game";
-        // static constexpr char ICON[] = "assets/knight.png";
+        static inline const std::filesystem::path ICON = Config::ASSETS_DIRECTORY / "icon.png";
         static constexpr unsigned int FRAMERATE_LIMIT = 60;
         static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
     };
@@ -15,7 +20,7 @@ namespace Config
     struct Knight
     {
         static constexpr unsigned int SIZE = 64;
-        static constexpr char SPRITESHEET[] = "assets/knight.png";
+        static inline const std::filesystem::path SPRITESHEET = Config::ASSETS_DIRECTORY / "knight.png";
         static constexpr sf::Vector2f INITIAL_POSITION = {Config::Window::WIDTH / 2, Config::Window::HEIGHT * 0.9};
     };
 
@@ -43,7 +48,7 @@ namespace Config
             static constexpr int SIZE = 24;
             static constexpr sf::Vector2f POSITION = {Config::Window::WIDTH - 10.0f, 10.0f};
             static constexpr sf::Color FILL_COLOR = sf::Color::White;
-            static constexpr char FONT[] = "assets/font.ttf";
+            static inline const std::filesystem::path FONT = Config::ASSETS_DIRECTORY / "font.ttf";
         };
     };
 
