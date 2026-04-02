@@ -1,6 +1,5 @@
 #include <vector>
 #include <random>
-#include <cmath>
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
 #include "config.hpp"

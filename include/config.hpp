@@ -17,6 +17,7 @@ namespace Config
         static inline const std::filesystem::path ICON = Config::ASSETS_DIRECTORY / "icon.png";
         static constexpr unsigned int FRAMERATE_LIMIT = 60;
         static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
+        static constexpr float CAMERA_FOLLOW_THRESHOLD_Y = 0.65f * Config::Window::HEIGHT;
     };
 
     struct Knight
@@ -46,14 +47,6 @@ namespace Config
             static constexpr float OUTLINE_THICKNESS = 2.0f;
             static constexpr float HEIGHT_ABOVE_KNIGHT = 10.0f;
         };
-
-        struct FPSCounter
-        {
-            static constexpr int SIZE = 24;
-            static constexpr sf::Vector2f POSITION = {Config::Window::WIDTH - 10.0f, 10.0f};
-            static constexpr sf::Color FILL_COLOR = sf::Color::White;
-            static inline const std::filesystem::path FONT = Config::ASSETS_DIRECTORY / "font.ttf";
-        };
     };
 
     struct Platform
@@ -69,7 +62,7 @@ namespace Config
         static constexpr unsigned int NR_OF_PLATFORMS = 10;
         static constexpr float MIN_PLATFORM_SPACING = 10.0f + Config::Platform::SIZE.y + 2 * Config::Platform::OUTLINE_THICKNESS;
         static constexpr float PLATFORM_HEIGHT_BIAS = 0.4f; // lower -> further apart, higher -> closer together
-        static constexpr float PLATFORM_HEIGHT_SPREAD = 0.2f;
+        static constexpr float PLATFORM_HEIGHT_SPREAD = 0.3f;
     };
 
     struct Physics
@@ -79,7 +72,7 @@ namespace Config
         static constexpr float MAX_JUMP_SPEED = 1200.0f;
         static constexpr float GRAVITY = 1600.0f;
         static constexpr float MAX_NEEDED_ANGLE = 35.0f * std::numbers::pi_v<float> / 180.0f;
-        static constexpr float MAX_JUMP_HEIGHT = ((std::cos(Config::Physics::MAX_NEEDED_ANGLE) * Config::Physics::MAX_JUMP_SPEED) * (std::cos(Config::Physics::MAX_NEEDED_ANGLE) * Config::Physics::MAX_JUMP_SPEED)) / (2 * Config::Physics::GRAVITY);
+        static inline const float MAX_JUMP_HEIGHT = pow(std::cos(Config::Physics::MAX_NEEDED_ANGLE) * Config::Physics::MAX_JUMP_SPEED, 2) / (2 * Config::Physics::GRAVITY);
         static constexpr sf::Angle ANGLE_STEP = sf::degrees(1);
         static constexpr sf::Angle MAX_ANGLE = sf::degrees(60);
     };

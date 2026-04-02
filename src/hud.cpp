@@ -7,7 +7,7 @@
 ProgressBar::ProgressBar() : background(Config::HUD::ProgressBar::SIZE)
 {
     background.setPosition(Config::HUD::ProgressBar::POSITION);
-    background.setFillColor(sf::Color::Transparent);
+    background.setFillColor(Config::Window::BACKGROUND_COLOR);
     background.setOutlineColor(Config::HUD::ProgressBar::OUTLINE_COLOR);
     background.setOutlineThickness(Config::HUD::ProgressBar::OUTLINE_THICKNESS);
 

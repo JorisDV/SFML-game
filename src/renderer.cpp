@@ -5,27 +5,27 @@
 #include "hud.hpp"
 #include "config.hpp"
 
-Renderer::Renderer(sf::RenderWindow &window) : window(window),
-                                               font(Config::HUD::FPSCounter::FONT),
-                                               fps_text(font)
-{
-    fps_text.setCharacterSize(Config::HUD::FPSCounter::SIZE);
-    fps_text.setString("FPS: 9999");
-    fps_text.setOrigin({fps_text.getGlobalBounds().size.x, 0});
-    fps_text.setPosition(Config::HUD::FPSCounter::POSITION);
-    fps_text.setFillColor(Config::HUD::FPSCounter::FILL_COLOR);
-}
+Renderer::Renderer(sf::RenderWindow &window) : window(window) {}
 
-void Renderer::draw(Knight &knight, World &world, Sensors &sensors, HUD &hud, float fps)
+void Renderer::draw(Knight &knight, World &world, Sensors &sensors, HUD &hud)
 {
     window.clear(Config::Window::BACKGROUND_COLOR);
+    view = window.getView();
 
     drawWorld(world);
     drawKnight(knight);
     drawHUD(hud, knight, sensors);
-    drawFPS(fps);
 
+    window.setView(view);
     window.display();
+}
+
+void Renderer::drawWorld(World &world)
+{
+    for (Platform platform : world.platforms)
+    {
+        window.draw(platform.rect);
+    }
 }
 
 void Renderer::drawKnight(Knight &knight)
@@ -52,14 +52,6 @@ void Renderer::drawKnight(Knight &knight)
     window.draw(knight.sprite);
 }
 
-void Renderer::drawWorld(World &world)
-{
-    for (Platform platform : world.platforms)
-    {
-        window.draw(platform.rect);
-    }
-}
-
 void Renderer::drawHUD(HUD &hud, Knight &knight, Sensors &sensors)
 {
     if (knight.hasJustLanded)
@@ -72,13 +64,8 @@ void Renderer::drawHUD(HUD &hud, Knight &knight, Sensors &sensors)
         window.draw(hud.arrow.triangle);
     }
 
+    window.setView(window.getDefaultView());
     hud.progress_bar.update(sensors);
     window.draw(hud.progress_bar.background);
     window.draw(hud.progress_bar.fill);
-}
-
-void Renderer::drawFPS(float fps)
-{
-    fps_text.setString("FPS: " + std::to_string((int)fps));
-    window.draw(fps_text);
 }

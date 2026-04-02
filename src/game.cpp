@@ -8,23 +8,10 @@
 #include "world.hpp"
 #include "hud.hpp"
 
-float calculateFPS(int &frame_count, float &timer, float dt, float fps)
-{
-    timer += dt;
-    frame_count++;
-
-    if (timer >= 0.25f)
-    {
-        fps = frame_count / timer;
-        frame_count = 0;
-        timer = 0.0f;
-    }
-
-    return fps;
-}
-
 Game::Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
-               renderer(window)
+               renderer(window),
+               view(window.getDefaultView()),
+               highest_y(Config::Knight::INITIAL_POSITION.y)
 {
     sf::Image icon(Config::Window::ICON);
     window.setIcon(icon.getSize(), icon.getPixelsPtr());
@@ -33,10 +20,6 @@ Game::Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIG
 
 void Game::start()
 {
-    int frame_count = 0;
-    float timer = 0.0f;
-    float fps = 0.0f;
-
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
@@ -47,12 +30,24 @@ void Game::start()
 
         float dt = clock.restart().asSeconds();
 
-        fps = calculateFPS(frame_count, timer, dt, fps);
-
         sensors.poll(dt);
         physics.calculateKnightPosition(knight, world, sensors, dt);
+
+        if (knight.position.y < highest_y)
+        {
+            if (highest_y < Config::Window::CAMERA_FOLLOW_THRESHOLD_Y)
+            {
+                float diff = highest_y - knight.position.y;
+                sf::Vector2f center = view.getCenter();
+                center.y -= diff;
+                view.setCenter(center);
+                window.setView(view);
+            }
+            highest_y = knight.position.y;
+        }
+
         checkGameOver(window, knight);
-        renderer.draw(knight, world, sensors, hud, fps);
+        renderer.draw(knight, world, sensors, hud);
     }
 }
 
@@ -69,15 +64,17 @@ void Game::restart()
     knight.isOnGround = true;
     hud.arrow.reset(knight, sensors);
     world.reset();
+    view.setCenter({Config::Window::WIDTH / 2, Config::Window::HEIGHT / 2});
+    window.setView(view);
+    highest_y = Config::Knight::INITIAL_POSITION.y;
 }
 
 void Game::checkGameOver(sf::RenderWindow &window, Knight &knight)
 {
-    sf::View view = window.getView();
     sf::Vector2f center = view.getCenter();
     sf::Vector2f size = view.getSize();
-    float yLevelUndersideView = center.y + (size.y / 2);
+    float y_level_underside_view = center.y + (size.y / 2);
 
-    if (knight.position.y - Config::Knight::SIZE > yLevelUndersideView)
+    if (knight.position.y > y_level_underside_view)
         restart();
 }

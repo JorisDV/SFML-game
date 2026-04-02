@@ -27,4 +27,6 @@ private:
     Physics physics;
     HUD hud;
     sf::Clock clock;
+    sf::View view;
+    float highest_y;
 };
