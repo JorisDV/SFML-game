@@ -68,6 +68,7 @@ void Game::restart()
     knight.velocity = {0.0f, 0.0f};
     knight.isOnGround = true;
     hud.arrow.reset(knight, sensors);
+    world.reset();
 }
 
 void Game::checkGameOver(sf::RenderWindow &window, Knight &knight)

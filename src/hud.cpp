@@ -27,10 +27,14 @@ Arrow::Arrow() : line(Config::HUD::Arrow::SIZE_LINE),
     line.setOrigin({Config::HUD::Arrow::SIZE_LINE.x / 2, Config::HUD::Arrow::SIZE_LINE.y});
     line.setPosition({Config::Knight::INITIAL_POSITION.x, Config::Knight::INITIAL_POSITION.y - Config::Knight::SIZE - Config::HUD::Arrow::HEIGHT_ABOVE_KNIGHT});
     line.setFillColor(Config::HUD::Arrow::COLOR);
+    line.setOutlineColor(Config::HUD::Arrow::OUTLINE_COLOR);
+    line.setOutlineThickness(Config::HUD::Arrow::OUTLINE_THICKNESS);
 
     triangle.setOrigin({Config::HUD::Arrow::SIZE_TRIANGLE, Config::HUD::Arrow::SIZE_TRIANGLE + Config::HUD::Arrow::SIZE_LINE.y});
     triangle.setPosition(line.getPosition());
     triangle.setFillColor(Config::HUD::Arrow::COLOR);
+    triangle.setOutlineColor(Config::HUD::Arrow::OUTLINE_COLOR);
+    triangle.setOutlineThickness(Config::HUD::Arrow::OUTLINE_THICKNESS);
 }
 
 void Arrow::update(sf::Angle angle)
