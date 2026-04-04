@@ -46,6 +46,8 @@ void Game::start()
             highest_y = knight.position.y;
         }
 
+        world.removePlatforms(view);
+        world.generatePlatforms();
         checkGameOver(window, knight);
         renderer.draw(knight, world, sensors, hud);
     }

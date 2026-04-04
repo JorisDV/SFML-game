@@ -59,7 +59,7 @@ namespace Config
 
     struct World
     {
-        static constexpr unsigned int NR_OF_PLATFORMS = 10;
+        static constexpr unsigned int NR_OF_PLATFORMS = 15;
         static constexpr float MIN_PLATFORM_SPACING = 10.0f + Config::Platform::SIZE.y + 2 * Config::Platform::OUTLINE_THICKNESS;
         static constexpr float PLATFORM_HEIGHT_BIAS = 0.4f; // lower -> further apart, higher -> closer together
         static constexpr float PLATFORM_HEIGHT_SPREAD = 0.3f;

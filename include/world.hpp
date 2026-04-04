@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <deque>
 #include <random>
 #include <SFML/Graphics.hpp>
 
@@ -19,13 +19,12 @@ public:
     World();
 
     void reset();
+    void generatePlatforms();
+    void removePlatforms(sf::View &view);
 
-    std::vector<Platform> platforms;
+    std::deque<Platform> platforms;
 
 private:
-    void generate_platforms();
-    void generate_platform();
-
     std::default_random_engine generator;
     std::uniform_real_distribution<float> x_distr;
 };
