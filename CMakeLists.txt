@@ -4,14 +4,16 @@ project(SFML-game LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+
 set(SFML_VERSION 3.0.2)
+
 find_package(SFML ${SFML_VERSION} QUIET COMPONENTS Graphics)
 
 if(NOT SFML_FOUND)
-    message(STATUS "SFML not found locally. Downloading... (this may take a while)")
-
     include(FetchContent)
-    FetchContent_Declare(SFML
+
+    FetchContent_Declare(
+        SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
         GIT_TAG ${SFML_VERSION}
         GIT_SHALLOW ON
@@ -21,7 +23,7 @@ if(NOT SFML_FOUND)
     FetchContent_MakeAvailable(SFML)
 endif()
 
-add_executable(main
+add_executable(${PROJECT_NAME}
     src/main.cpp
     src/game.cpp
     src/hud.cpp
@@ -32,10 +34,9 @@ add_executable(main
     src/world.cpp
 )
 
-target_compile_features(main PRIVATE cxx_std_23)
-target_link_libraries(main PRIVATE SFML::Graphics)
-target_link_libraries(main PRIVATE stdc++exp) # Needed for std::print
-target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
+target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics stdc++exp) # stdc++exp needed for std::print
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # Make the assets a dependency
 file(GLOB_RECURSE ASSET_FILES CONFIGURE_DEPENDS
@@ -50,4 +51,4 @@ add_custom_target(copy_assets ALL
     DEPENDS ${ASSET_FILES}
 )
 
-add_dependencies(main copy_assets)
+add_dependencies(${PROJECT_NAME} copy_assets)
