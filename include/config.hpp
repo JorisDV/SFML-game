@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <filesystem>
 #include <numbers>
 #include <cmath>
@@ -13,11 +14,11 @@ namespace Config
     {
         static constexpr unsigned int WIDTH = 1280;
         static constexpr unsigned int HEIGHT = 1280;
-        static constexpr char TITLE[] = "SFML-game";
+        static constexpr std::string TITLE = "SFML-game";
         static inline const std::filesystem::path ICON = Config::ASSETS_DIRECTORY / "icon.png";
         static constexpr unsigned int FRAMERATE_LIMIT = 60;
         static constexpr sf::Color BACKGROUND_COLOR = sf::Color(0x2499A6FF);
-        static constexpr float CAMERA_FOLLOW_THRESHOLD_Y = 0.65f * Config::Window::HEIGHT;
+        static constexpr float CAMERA_FOLLOW_THRESHOLD_Y = 0.6f * Config::Window::HEIGHT;
     };
 
     struct Knight
@@ -31,7 +32,7 @@ namespace Config
     {
         struct ProgressBar
         {
-            static constexpr sf::Vector2f SIZE = {150.0f, 25.0f};
+            static constexpr sf::Vector2f SIZE = {160.0f, 30.0f};
             static constexpr sf::Vector2f POSITION = {10.0f, 10.0f};
             static constexpr sf::Color FILL_COLOR = sf::Color::Green;
             static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
@@ -46,6 +47,18 @@ namespace Config
             static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
             static constexpr float OUTLINE_THICKNESS = 2.0f;
             static constexpr float HEIGHT_ABOVE_KNIGHT = 10.0f;
+        };
+
+        struct Score
+        {
+            static inline const std::filesystem::path FONT = Config::ASSETS_DIRECTORY / "Minecraft.ttf";
+            static constexpr unsigned int SIZE = 40;
+            static constexpr sf::Color COLOR = sf::Color::White;
+            static constexpr sf::Color OUTLINE_COLOR = sf::Color::Black;
+            static constexpr float OUTLINE_THICKNESS = 2.0f;
+            static constexpr sf::Vector2f POSITION = {Config::Window::WIDTH / 2, 10.0f};
+            static constexpr std::string STRING = "Score: ";
+            static constexpr float LETTER_SPACING = 2.0f;
         };
     };
 

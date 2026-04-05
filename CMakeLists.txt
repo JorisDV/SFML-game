@@ -34,6 +34,7 @@ add_executable(main
 
 target_compile_features(main PRIVATE cxx_std_23)
 target_link_libraries(main PRIVATE SFML::Graphics)
+target_link_libraries(main PRIVATE stdc++exp) # Needed for std::print
 target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # Make the assets a dependency

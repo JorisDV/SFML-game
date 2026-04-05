@@ -1,3 +1,4 @@
+#include <string>
 #include <SFML/Graphics.hpp>
 #include "hud.hpp"
 #include "config.hpp"
@@ -48,4 +49,46 @@ void Arrow::reset(Knight &knight, Sensors &sensors)
     line.setPosition({knight.position.x, knight.position.y - Config::Knight::SIZE - Config::HUD::Arrow::HEIGHT_ABOVE_KNIGHT});
     triangle.setPosition(line.getPosition());
     sensors.angle = sf::degrees(0);
+}
+
+Score::Score() : font(Config::HUD::Score::FONT),
+                 text(font),
+                 score(0),
+                 prev_score_length(1)
+{
+    text.setCharacterSize(Config::HUD::Score::SIZE);
+    text.setFillColor(Config::HUD::Score::COLOR);
+    text.setOutlineColor(Config::HUD::Score::OUTLINE_COLOR);
+    text.setOutlineThickness(Config::HUD::Score::OUTLINE_THICKNESS);
+    text.setLetterSpacing(Config::HUD::Score::LETTER_SPACING);
+    text.setString(Config::HUD::Score::STRING + "0");
+    sf::FloatRect bounds = text.getLocalBounds();
+    text.setOrigin({bounds.size.x / 2.0f + bounds.position.x, bounds.position.y});
+    sf::Vector2f text_position = Config::HUD::Score::POSITION;
+    text.setPosition(text_position);
+
+    background.setPosition({text_position.x - bounds.size.x / 2.0f, text_position.y});
+    background.setSize(bounds.size);
+    background.setFillColor(sf::Color::Red);
+    background.setOutlineColor(background.getFillColor());
+    background.setOutlineThickness(Config::HUD::Score::OUTLINE_THICKNESS);
+}
+
+void Score::update(Knight &knight)
+{
+    score = static_cast<unsigned int>(Config::Knight::INITIAL_POSITION.y - knight.highest_y);
+    std::string score_string = std::to_string(score);
+    text.setString(Config::HUD::Score::STRING + score_string);
+
+    size_t score_length = score_string.length();
+    if (score_length != prev_score_length)
+    {
+        background.setSize(text.getLocalBounds().size);
+        prev_score_length = score_length;
+    }
+}
+
+void HUD::reset(Knight &knight, Sensors &sensors)
+{
+    arrow.reset(knight, sensors);
 }

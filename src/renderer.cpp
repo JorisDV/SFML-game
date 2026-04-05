@@ -68,4 +68,8 @@ void Renderer::drawHUD(HUD &hud, Knight &knight, Sensors &sensors)
     hud.progress_bar.update(sensors);
     window.draw(hud.progress_bar.background);
     window.draw(hud.progress_bar.fill);
+
+    hud.score.update(knight);
+    window.draw(hud.score.background);
+    window.draw(hud.score.text);
 }

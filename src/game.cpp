@@ -10,8 +10,7 @@
 
 Game::Game() : window(sf::VideoMode({Config::Window::WIDTH, Config::Window::HEIGHT}), Config::Window::TITLE),
                renderer(window),
-               view(window.getDefaultView()),
-               highest_y(Config::Knight::INITIAL_POSITION.y)
+               view(window.getDefaultView())
 {
     sf::Image icon(Config::Window::ICON);
     window.setIcon(icon.getSize(), icon.getPixelsPtr());
@@ -33,17 +32,17 @@ void Game::start()
         sensors.poll(dt);
         physics.calculateKnightPosition(knight, world, sensors, dt);
 
-        if (knight.position.y < highest_y)
+        if (knight.position.y < knight.highest_y)
         {
-            if (highest_y < Config::Window::CAMERA_FOLLOW_THRESHOLD_Y)
+            if (knight.highest_y < Config::Window::CAMERA_FOLLOW_THRESHOLD_Y)
             {
-                float diff = highest_y - knight.position.y;
+                float diff = knight.highest_y - knight.position.y;
                 sf::Vector2f center = view.getCenter();
                 center.y -= diff;
                 view.setCenter(center);
                 window.setView(view);
             }
-            highest_y = knight.position.y;
+            knight.highest_y = knight.position.y;
         }
 
         world.removePlatforms(view);
@@ -64,11 +63,11 @@ void Game::restart()
     knight.sprite.setPosition(knight.position);
     knight.velocity = {0.0f, 0.0f};
     knight.isOnGround = true;
-    hud.arrow.reset(knight, sensors);
+    knight.highest_y = Config::Knight::INITIAL_POSITION.y;
+    hud.reset(knight, sensors);
     world.reset();
     view.setCenter({Config::Window::WIDTH / 2, Config::Window::HEIGHT / 2});
     window.setView(view);
-    highest_y = Config::Knight::INITIAL_POSITION.y;
 }
 
 void Game::checkGameOver(sf::RenderWindow &window, Knight &knight)
