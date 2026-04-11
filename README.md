@@ -1,6 +1,6 @@
-# SFML Game
+# SFML-game
 
-**SFML Game** is a 2D platformer game inspired by [Jump King](https://www.jump-king.com), built with [SFML](https://www.sfml-dev.org/).
+**SFML-game** is a 2D platformer game inspired by [Jump King](https://www.jump-king.com), built with [SFML](https://www.sfml-dev.org/).
 
 ## Screenshot
 
